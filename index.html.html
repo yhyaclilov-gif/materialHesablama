@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#667eea">
+    <meta name="description" content="Material hesablama və qazanc hesablaması sistemi">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Material Hesablama">
+    <title>Material Hesablama</title>
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIk1hdGVyaWFsIEhlc2FibGFtYSBTaXN0ZW1pIiwKICAic2hvcnRfbmFtZSI6ICJNYXRlcmlhbCIsCiAgInN0YXJ0X3VybCI6ICIuLyIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiI2ZmZmZmZiIsCiAgInRoZW1lX2NvbG9yIjogIiM2NjdlZWEiLAogICJvcmllbnRhdGlvbiI6ICJwb3J0cmFpdCIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgMTAwIDEwMCclM0UlM0NyZWN0IHdpZHRoPScxMDAnIGhlaWdodD0nMTAwJyBmaWxsPSclMjM2NjdlZWEnLyUzRSUzQ3RleHQgeD0nNTAlMjUnIHk9JzUwJTI1JyBmb250LXNpemU9JzUwJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJyBkeT0nLjNlbScgZmlsbD0nd2hpdGUnJTNFJUYwJTlGJTkzJThBJTNDL3RleHQlM0UlM0Mvc3ZnJTNFIiwKICAgICAgInNpemVzIjogIjE5MngxOTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9zdmcreG1sIgogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWwsJTNDc3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgdmlld0JveD0nMCAwIDEwMCAxMDAnJTNFJTNDcmVjdCB3aWR0aD0nMTAwJyBoZWlnaHQ9JzEwMCcgZmlsbD0nJTIzNjY3ZWVhJy8lM0UlM0N0ZXh0IHg9JzUwJTI1JyB5PSc1MCUyNScgZm9udC1zaXplPSc1MCcgdGV4dC1hbmNob3I9J21pZGRsZScgZHk9Jy4zZW0nIGZpbGw9J3doaXRlJyUzRSVGMCU5RiU5MyU4QSUzQy90ZXh0JTNFJTNDJTJGc3ZnJTNFIiwKICAgICAgInNpemVzIjogIjUxMng1MTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9zdmcreG1sIgogICAgfQogIF0KfQ==">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .install-banner {
+            background: #ffd700;
+            color: #333;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+            cursor: pointer;
+        }
+
+        .install-banner.show {
+            display: block;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #f0f0f0;
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 15px 25px;
+            background: transparent;
+            border: none;
+            color: #666;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            color: #667eea;
+        }
+
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: #f8f9ff;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 2px solid #e8ebff;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .material-item {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .material-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .material-info {
+            flex: 1;
+        }
+
+        .material-name {
+            font-weight: 700;
+            color: #333;
+            font-size: 1.15rem;
+            margin-bottom: 5px;
+        }
+
+        .material-details {
+            color: #666;
+            font-size: 0.95rem;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .material-badge {
+            background: #e8ebff;
+            color: #667eea;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .delete-btn {
+            background: #ff4757;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .delete-btn:hover {
+            background: #ee5a6f;
+            transform: scale(1.05);
+        }
+
+        .calc-item {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            border: 2px solid #e8ebff;
+        }
+
+        .calc-item h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .calc-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .result {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .result-row:hover {
+            transform: scale(1.02);
+        }
+
+        .result-maya {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            color: #1976d2;
+        }
+
+        .result-satis {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            color: #7b1fa2;
+        }
+
+        .result-qazanc {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            color: #2e7d32;
+            font-weight: 700;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 15px rgba(46, 125, 50, 0.2);
+        }
+
+        .result-qazanc.negative {
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            color: #c62828;
+            box-shadow: 0 4px 15px rgba(198, 40, 40, 0.2);
+        }
+
+        .result-label {
+            font-weight: 700;
+        }
+
+        .result-value {
+            font-weight: 700;
+        }
+
+        .details-box {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .details-box strong {
+            color: #667eea;
+            font-size: 1.05rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .details-box div {
+            color: #666;
+            padding: 8px 0;
+            border-bottom: 1px solid #e8ebff;
+        }
+
+        .details-box div:last-child {
+            border-bottom: none;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #999;
+            padding: 40px 20px;
+            font-size: 1.05rem;
+        }
+
+        .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            opacity: 0.5;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 0;
+            }
+
+            .container {
+                border-radius: 0;
+            }
+
+            .content {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .calc-inputs {
+                grid-template-columns: 1fr;
+            }
+
+            .material-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .delete-btn {
+                width: 100%;
+            }
+
+            .result-row {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .tabs {
+                gap: 5px;
+            }
+
+            .tab {
+                padding: 12px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="install-banner" id="installBanner" onclick="installApp()">
+        📲 Tətbiqi quraşdırın - Daha sürətli istifadə üçün!
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>
+                <span>📊</span>
+                <span>Material Hesablama</span>
+            </h1>
+            <p>Materialları idarə edin və qazancınızı hesablayın</p>
+        </div>
+
+        <div class="content">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('add')">➕ Yeni Material</button>
+                <button class="tab" onclick="switchTab('list')">📋 Materiallar</button>
+                <button class="tab" onclick="switchTab('calc')">🧮 Hesablama</button>
+            </div>
+
+            <div id="tab-add" class="tab-content active">
+                <div class="card">
+                    <div class="form-group">
+                        <label>Material Adı</label>
+                        <input type="text" id="materialName" placeholder="Məsələn: Kərpic">
+                    </div>
+                    <div class="form-group">
+                        <label>Ölçü Vahidi</label>
+                        <input type="text" id="materialUnit" placeholder="Məsələn: m², ədəd, kg">
+                    </div>
+                    <div class="form-group">
+                        <label>Maya Qiyməti (1 vahid)</label>
+                        <input type="number" id="materialCost" placeholder="50.00" step="0.01">
+                    </div>
+                    <button class="btn" onclick="addMaterial()">✓ Material Əlavə Et</button>
+                </div>
+            </div>
+
+            <div id="tab-list" class="tab-content">
+                <div class="stats-grid" id="statsGrid"></div>
+                <div id="materialsList"></div>
+            </div>
+
+            <div id="tab-calc" class="tab-content">
+                <div class="card">
+                    <div id="calculatorInputs"></div>
+                    <button class="btn" onclick="calculate()">🧮 Hesabla</button>
+                    <div id="result"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var materials = [];
+        var currentTab = 'add';
+        var deferredPrompt;
+
+        window.addEventListener('beforeinstallprompt', function(e) {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installBanner').classList.add('show');
+        });
+
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(function(choiceResult) {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('Tətbiq quraşdırıldı');
+                    }
+                    deferredPrompt = null;
+                    document.getElementById('installBanner').classList.remove('show');
+                });
+            }
+        }
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('data:text/javascript;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdpbnN0YWxsJywgZnVuY3Rpb24oZXZlbnQpIHsKICBzZWxmLnNraXBXYWl0aW5nKCk7Cn0pOwoKc2VsZi5hZGRFdmVudExpc3RlbmVyKCdhY3RpdmF0ZScsIGZ1bmN0aW9uKGV2ZW50KSB7CiAgcmV0dXJuIHNlbGYuY2xpZW50cy5jbGFpbSgpOwp9KTsKCnNlbGYuYWRkRXZlbnRMaXN0ZW5lcignZmV0Y2gnLCBmdW5jdGlvbihldmVudCkgewogIGV2ZW50LnJlc3BvbmRXaXRoKAogICAgZmV0Y2goZXZlbnQucmVxdWVzdCkuY2F0Y2goZnVuY3Rpb24oKSB7CiAgICAgIHJldHVybiBuZXcgUmVzcG9uc2UoJ09mZmxpbmUnKTsKICAgIH0pCiAgKTsKfSk7').catch(function() {});
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            
+            var tabs = document.querySelectorAll('.tab');
+            var contents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(function(t) { t.classList.remove('active'); });
+            contents.forEach(function(c) { c.classList.remove('active'); });
+            
+            document.querySelector('.tab:nth-child(' + (tab === 'add' ? '1' : tab === 'list' ? '2' : '3') + ')').classList.add('active');
+            document.getElementById('tab-' + tab).classList.add('active');
+            
+            if (tab === 'list') {
+                displayStats();
+                displayMaterials();
+            } else if (tab === 'calc') {
+                displayCalculator();
+            }
+        }
+
+        function loadMaterials() {
+            try {
+                var saved = localStorage.getItem('materials');
+                if (saved) {
+                    materials = JSON.parse(saved);
+                }
+            } catch (e) {
+                materials = [];
+            }
+        }
+
+        function saveMaterials() {
+            localStorage.setItem('materials', JSON.stringify(materials));
+        }
+
+        function addMaterial() {
+            var name = document.getElementById('materialName').value.trim();
+            var unit = document.getElementById('materialUnit').value.trim();
+            var costValue = document.getElementById('materialCost').value;
+
+            if (name === '') {
+                alert('❌ Material adını daxil edin!');
+                return;
+            }
+            
+            if (unit === '') {
+                alert('❌ Ölçü vahidini daxil edin!');
+                return;
+            }
+            
+            var cost = parseFloat(costValue);
+            if (costValue === '' || isNaN(cost) || cost <= 0) {
+                alert('❌ Maya qiymətini düzgün daxil edin!');
+                return;
+            }
+
+            materials.push({
+                id: Date.now(),
+                name: name,
+                unit: unit,
+                cost: cost
+            });
+
+            saveMaterials();
+
+            document.getElementById('materialName').value = '';
+            document.getElementById('materialUnit').value = '';
+            document.getElementById('materialCost').value = '';
+            
+            alert('✅ Material əlavə edildi!');
+            switchTab('list');
+        }
+
+        function displayStats() {
+            var statsGrid = document.getElementById('statsGrid');
+            var totalMaterials = materials.length;
+            var totalValue = 0;
+            
+            for (var i = 0; i < materials.length; i++) {
+                totalValue += materials[i].cost;
+            }
+            
+            var avgValue = totalMaterials > 0 ? (totalValue / totalMaterials).toFixed(2) : 0;
+            
+            var html = '';
+            html += '<div class="stat-card">';
+            html += '<div class="stat-number">' + totalMaterials + '</div>';
+            html += '<div class="stat-label">Ümumi Material</div>';
+            html += '</div>';
+            
+            html += '<div class="stat-card">';
+            html += '<div class="stat-number">' + totalValue.toFixed(2) + '</div>';
+            html += '<div class="stat-label">Ümumi Maya (AZN)</div>';
+            html += '</div>';
+            
+            html += '<div class="stat-card">';
+            html += '<div class="stat-number">' + avgValue + '</div>';
+            html += '<div class="stat-label">Orta Maya (AZN)</div>';
+            html += '</div>';
+            
+            statsGrid.innerHTML = html;
+        }
+
+        function displayMaterials() {
+            var list = document.getElementById('materialsList');
+            
+            if (materials.length === 0) {
+                list.innerHTML = '<div class="empty-message"><div class="empty-icon">📦</div>Hələ material əlavə edilməyib</div>';
+                return;
+            }
+
+            var html = '';
+            for (var i = 0; i < materials.length; i++) {
+                var material = materials[i];
+                
+                html += '<div class="material-item">';
+                html += '<div class="material-info">';
+                html += '<div class="material-name">' + material.name + '</div>';
+                html += '<div class="material-details">';
+                html += '<span class="material-badge">' + material.unit + '</span>';
+                html += '<span class="material-badge">' + material.cost.toFixed(2) + ' AZN</span>';
+                html += '</div></div>';
+                html += '<button class="delete-btn" onclick="deleteMaterial(' + material.id + ')">🗑 Sil</button>';
+                html += '</div>';
+            }
+            
+            list.innerHTML = html;
+        }
+
+        function deleteMaterial(id) {
+            if (confirm('⚠️ Bu materialı silmək istədiyinizdən əminsiniz?')) {
+                var newMaterials = [];
+                for (var i = 0; i < materials.length; i++) {
+                    if (materials[i].id !== id) {
+                        newMaterials.push(materials[i]);
+                    }
+                }
+                materials = newMaterials;
+                saveMaterials();
+                displayStats();
+                displayMaterials();
+            }
+        }
+
+        function displayCalculator() {
+            var calcInputs = document.getElementById('calculatorInputs');
+            
+            if (materials.length === 0) {
+                calcInputs.innerHTML = '<div class="empty-message"><div class="empty-icon">📊</div>Hesablama üçün material əlavə edin</div>';
+                document.getElementById('result').innerHTML = '';
+                return;
+            }
+
+            var html = '';
+            for (var i = 0; i < materials.length; i++) {
+                var material = materials[i];
+                html += '<div class="calc-item">';
+                html += '<h3>' + material.name + ' (' + material.unit + ')</h3>';
+                html += '<div class="calc-inputs">';
+                html += '<div class="form-group">';
+                html += '<label>Miqdar</label>';
+                html += '<input type="number" id="qty_' + material.id + '" placeholder="0" step="0.01" min="0">';
+                html += '</div>';
+                html += '<div class="form-group">';
+                html += '<label>Satış Qiyməti (1 vahid)</label>';
+                html += '<input type="number" id="price_' + material.id + '" placeholder="0" step="0.01" min="0">';
+                html += '</div>';
+                html += '</div></div>';
+            }
+            
+            calcInputs.innerHTML = html;
+        }
+
+        function calculate() {
+            var totalMaya = 0;
+            var totalSatis = 0;
+            var details = [];
+
+            for (var i = 0; i < materials.length; i++) {
+                var material = materials[i];
+                var qtyInput = document.getElementById('qty_' + material.id);
+                var priceInput = document.getElementById('price_' + material.id);
+                
+                if (qtyInput && priceInput) {
+                    var qty = parseFloat(qtyInput.value) || 0;
+                    var price = parseFloat(priceInput.value) || 0;
+                    
+                    if (qty > 0 && price > 0) {
+                        var maya = qty * material.cost;
+                        var satis = qty * price;
+                        var profit = satis - maya;
+                        totalMaya += maya;
+                        totalSatis += satis;
+                        details.push('<div>' + material.name + ': ' + qty + ' ' + material.unit + ' → Maya: ' + maya.toFixed(2) + ' AZN | Satış: ' + satis.toFixed(2) + ' AZN | Qazanc: ' + profit.toFixed(2) + ' AZN</div>');
+                    }
+                }
+            }
+
+            var resultDiv = document.getElementById('result');
+            
+            if (totalMaya === 0) {
+                resultDiv.innerHTML = '<div class="empty-message"><div class="empty-icon">⚠️</div>Hesablama üçün miqdar və satış qiyməti daxil edin</div>';
+                return;
+            }
+
+            var totalProfit = totalSatis - totalMaya;
+            var totalProfitPercent = ((totalProfit / totalMaya) * 100).toFixed(1);
+            var profitClass = totalProfit >= 0 ? 'result-qazanc' : 'result-qazanc negative';
+            var profitLabel = totalProfit >= 0 ? '💰 Ümumi Qazanc:' : '📉 Ümumi Zərər:';
+
+            var html = '<div class="result">';
+            html += '<div class="result-row result-maya">';
+            html += '<span class="result-label">💵 Ümumi Maya Dəyəri:</span>';
+            html += '<span class="result-value">' + totalMaya.toFixed(2) + ' AZN</span>';
+            html += '</div>';
+            
+            html += '<div class="result-row result-satis">';
+            html += '<span class="result-label">💳 Satış Qiyməti:</span>';
+            html += '<span class="result-value">' + totalSatis.toFixed(2) + ' AZN</span>';
+            html += '</div>';
+            
+            html += '<div class="result-row ' + profitClass + '">';
+            html += '<span class="result-label">' + profitLabel + '</span>';
+            html += '<span class="result-value">' + totalProfit.toFixed(2) + ' AZN (' + totalProfitPercent + '%)</span>';
+            html += '</div>';
+            
+            html += '<div class="details-box">';
+            html += '<strong>📋 Detallı Məlumat:</strong>';
+            html += details.join('');
+            html += '</div></div>';
+
+            resultDiv.innerHTML = html;
+        }
+
+        loadMaterials();
+    </script>
+</body>
+</html>
