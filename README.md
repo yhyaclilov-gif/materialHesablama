@@ -38,7 +38,8 @@ Tətbiq minimalizm və sürət üçün heç bir xarici kitabxana (framework) ist
 ## 📸 Ekran Görüntüləri
 
 <p align="center">
-  <i>(Bura tətbiqin ekran görüntülərini əlavə edə bilərsiniz)</i>
+  <i>(<img width="1916" height="999" alt="image" src="https://github.com/user-attachments/assets/d0c4dd33-e726-49bd-ada4-0f5b808e78dd" />
+)</i>
 </p>
 
 ---
